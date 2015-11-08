@@ -1,3 +1,8 @@
+/*  This file contains all the functions built with the help of ncurses library
+ *  which display the screen to the user.   
+ */
+
+
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
@@ -102,7 +107,7 @@ void show_preview( WINDOW* win, const char brick ){
   for( i = 0; i < 4; i++ )
     for( ii = 0; ii < 4; ii++ )
       if( matrix_brick[brick - 1][i][ii] )
-        mvwaddstr( win, i + 1, ii * 2 + 3, "" );
+        mvwaddstr( win, i + 1, ii * 2 + 3, " " );
 
   if(color != 0) wattroff(win, COLOR_PAIR(color));
   wrefresh( win );
@@ -211,7 +216,7 @@ void clear_brick( WINDOW* win, char mtx_brick[4][4], char y, char x ){
     for( ii = 0; ii < 4; ii++ )
       if( mtx_brick[i][ii] )
         if( y + i >= 0 )
-          mvwaddstr( win, y + i + 1, x + ii * 2 + 1, "o" );
+          mvwaddstr( win, y + i + 1, x + ii * 2 + 1, " " );
 }
 
 void draw_brick( WINDOW* win, char brick, char mtx_brick[4][4], char y, char x ){
