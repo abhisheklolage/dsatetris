@@ -9,27 +9,29 @@
 #include "screen.h"
 #include "brick.h"
 
-void init_screen(){
-  if( !initscr() ){
-    fprintf( stderr, "ERROR, initscr() return ERR\n" );
-    exit( 1 );
-  }
-  if( !has_colors() ){
-    endwin();
-    printf( "ERROR, your terminal can't display colors.\n" );
-    exit( 1 );
-  }
-  start_color();
-  init_colors();
-  clear();
-  noecho();
-  keypad( stdscr, TRUE );
-  cbreak();
-  curs_set( FALSE );
+void init_screen() {
+    if(!initscr()) {
+        fprintf( stderr, "ERROR in init_screen() \n");
+        exit(1);
+    }
+  
+    if(!has_colors()) {
+        endwin();
+        printf("ERROR with colors! \n" );
+        exit(1);
+    }
+    
+    start_color();
+    init_colors();
+    clear();
+    noecho();
+    keypad(stdscr, TRUE);
+    cbreak();
+    curs_set(FALSE);
 }
 
-void restore_screen(){
-  endwin();
+void restore_screen() {
+    endwin();
 }
 
 void init_colors(){
