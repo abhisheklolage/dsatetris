@@ -32,6 +32,8 @@
 
 enum { MOVE, LEFT, RIGHT, DOWN, BOTTOM, ROTATE_L, ROTATE_R, SHADOW };
 
+/*char shadow_mtx[4][4] = {0};*/
+
 enum CK {  BB = 1, BR, BG, BY, BX, BM, BC, BW,              
                RB, RR, RG, RY, RX, RM, RC, RW,              
                GB, GR, GG, GY, GX, GM, GC, GW,              

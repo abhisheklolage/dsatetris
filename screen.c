@@ -324,6 +324,18 @@ void move_brick( WINDOW* win, char board[BOARD_HEIGHT][BOARD_WIDTH], char mtx_br
 
 	int y_orig;
 	clear_brick( win, mtx_brick, *y, *x );
+	if(shadow) {
+		y_orig = *y;
+		while( !check_brick( mtx_brick, board, (*y) + 1, *x ) ) {
+			*y += 1;
+		}
+		
+		clear_brick( win, mtx_brick, *y, *x );
+		*y = y_orig;
+	}
+	/*if(shadow) {
+		clear_brick( win, mtx_brick, *y, *x );
+	}*/
 	switch(move) {
 		case MOVE:
     				break;
@@ -366,7 +378,7 @@ void move_brick( WINDOW* win, char board[BOARD_HEIGHT][BOARD_WIDTH], char mtx_br
 				break;
 	}
 	
-	draw_brick( win, brick, mtx_brick, *y, *x );
+	//draw_brick( win, brick, mtx_brick, *y, *x );
 	if(shadow) {
 		y_orig = *y;
 		while( !check_brick( mtx_brick, board, (*y) + 1, *x ) ) {
@@ -376,4 +388,5 @@ void move_brick( WINDOW* win, char board[BOARD_HEIGHT][BOARD_WIDTH], char mtx_br
 		draw_brick( win, 6, mtx_brick, *y, *x );
 		*y = y_orig;
 	}
+	draw_brick( win, brick, mtx_brick, *y, *x );
 } 
