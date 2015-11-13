@@ -9,6 +9,11 @@
 #include "screen.h"
 #include "brick.h"
 
+#define SHADOWON 	1
+#define SHADOWOFF	0
+
+int shadow = 0;
+
 void init_screen() {
 	if(!initscr()) {
 		fprintf( stderr, "ERROR in init_screen() \n");
@@ -136,7 +141,7 @@ void show_score( WINDOW *win, const int score, const int level, const int lines 
   mvwprintw(win, 1, 2, "Level:");
   mvwprintw(win, 5, 2, "Score:");
   mvwprintw(win, 9, 2, "lines:");
-  wattron(win, COLOR_PAIR(GY) );
+  wattron(win, COLOR_PAIR(YB) );
   mvwprintw(win, 3, 2, "%7i", level );
   mvwprintw(win, 7, 2, "%7i", score );
   mvwprintw(win, 11, 2, "%7i", lines );
@@ -317,6 +322,7 @@ int check_brick( char mtx_brick[4][4], char board[BOARD_HEIGHT][BOARD_WIDTH],
 void move_brick( WINDOW* win, char board[BOARD_HEIGHT][BOARD_WIDTH], char mtx_brick[4][4],
                 char brick, char* y, char* x, char move ) {
 
+	int y_orig;
 	clear_brick( win, mtx_brick, *y, *x );
 	switch(move) {
 		case MOVE:
@@ -347,9 +353,27 @@ void move_brick( WINDOW* win, char board[BOARD_HEIGHT][BOARD_WIDTH], char mtx_br
   		case ROTATE_R: 
 				rotate_brick( mtx_brick, board, y, x, 1 );
     				break;
-  		default:
+  		case SHADOW:	
+				if(shadow) {
+					shadow = SHADOWOFF;
+					break;
+				}
+				if(!shadow) {
+					shadow = SHADOWON;
+					break;
+				}
+		default:
 				break;
 	}
-
+	
 	draw_brick( win, brick, mtx_brick, *y, *x );
+	if(shadow) {
+		y_orig = *y;
+		while( !check_brick( mtx_brick, board, (*y) + 1, *x ) ) {
+			*y += 1;
+		}
+		
+		draw_brick( win, 6, mtx_brick, *y, *x );
+		*y = y_orig;
+	}
 } 

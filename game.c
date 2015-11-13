@@ -41,7 +41,7 @@ int check_lines( char board[BOARD_HEIGHT][BOARD_WIDTH], int* score, int* lines )
     memcpy( board, tmp_board, BOARD_HEIGHT * BOARD_WIDTH );
     *lines += lns;
     switch( lns ){
-    case 1:  *score += POINTS; break;
+    case 1:  *score += POINTS    ; break;
     case 2:  *score += POINTS * 2; break;
     case 3:  *score += POINTS * 5; break;
     case 4:  *score += POINTS * 8; break;
@@ -115,7 +115,9 @@ int start_game(){
         move_brick( wboard, board, mtx_brick, brick, &y, &x, RIGHT    ); break;
       case ' ':
         move_brick( wboard, board, mtx_brick, brick, &y, &x, BOTTOM   ); break;
-      case 27:  play = move = false; break;
+	case 's': 
+        move_brick( wboard, board, mtx_brick, brick, &y, &x, SHADOW   ); break;
+	case 27:  play = move = false; break;
       case 'q': play = move = false; break;
       default: break;
       } // switch( getch() )
