@@ -1,4 +1,22 @@
  
+/* 	<TETRIS Game in C using ncurses>
+ *	Copyright (C)
+ *	<2015>  <Abhishek Lolage>
+ *
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * */
+
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
@@ -49,12 +67,4 @@ enum CK {  BB = 1, BR, BG, BY, BX, BM, BC, BW,
                CB, CR, CG, CY, CX, CM, CC, CW,              
                WB, WR, WG, WY, WX, WM, WC, WW, CKMAX };     
 
-/* enum CK {  BB = 1, BR, BG, BY, BX, BM, BC, BW,              
-               RB, RR, RG, RY, RX, RM, RC, RW,              
-               GB, GR, GG, GY, GX, GM, GC, GW,              
-               YB, YR, YG, YY, YX, YM, YC, YW,              
-               XB, XR, XG, XY, XX, XM, XC, XW,              
-               MB, MR, MG, MY, MX, MM, MC, MW,              
-               CB, CR, CG, CY, CX, CM, CC, CW,              
-               WB, WR, WG, WY, WX, WM, WC, WW, CKMAX };*/
 #endif  // CONSTANTS_H
