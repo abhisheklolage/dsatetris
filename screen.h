@@ -13,12 +13,14 @@ WINDOW* create_wboard();
 WINDOW* create_wpreview();
 WINDOW* create_wscore();
 WINDOW* create_winstr();
+WINDOW* create_wgeninstr();
 
 void ck_mvaddch( int ck, int y, int x, const char ch );
 void show_title();
 void show_instr( WINDOW *win );
 void show_score( WINDOW* win, const int score, const int level, const int lines );
 void show_preview( WINDOW* win, const char brick );
+void show_geninstr(WINDOW *win);
 void clear_win( WINDOW* win );
 void wait_start( WINDOW* win );
 void draw_brick( WINDOW* win, char brick, char mtx_brick[4][4], char y, char x );

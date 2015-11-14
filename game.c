@@ -19,45 +19,53 @@ void set_board( char board[BOARD_HEIGHT][BOARD_WIDTH], char mtx_brick[4][4],
 }
 
 
-int check_lines( char board[BOARD_HEIGHT][BOARD_WIDTH], int* score, int* lines ){
+int check_lines(char board[BOARD_HEIGHT][BOARD_WIDTH], int* score, int* lines) {
 	char tmp_board[BOARD_HEIGHT][BOARD_WIDTH];
-	memset( tmp_board, 0, BOARD_HEIGHT * BOARD_WIDTH );
+	memset(tmp_board, 0, BOARD_HEIGHT * BOARD_WIDTH);
 	char cont = 0;
 	char lns = 0;
 	int i, j;
 	int ti = BOARD_HEIGHT - 1;
-	for( i = BOARD_HEIGHT - 1; i >= 0; i-- ){
-		for( j = 0; j < BOARD_WIDTH; j++ ){
-			if( board[i][j] ) cont++;
+	for(i = BOARD_HEIGHT - 1; i >= 0; i--) {
+		for(j = 0; j < BOARD_WIDTH; j++) {
+			if(board[i][j]) {
+				cont++;
+			}
 		}
 
-		if( cont == BOARD_WIDTH ){
+		if(cont == BOARD_WIDTH) {
 			cont = 0;
 			lns++;
 		}
-		if( cont != 0 ){
-      			memcpy( tmp_board[ti--], board[i], BOARD_WIDTH );
+		if(cont != 0) {
+      			memcpy(tmp_board[ti--], board[i], BOARD_WIDTH);
       			cont = 0;
     		}
   	}
 
-	if( lns != 0 ){
-		memcpy( board, tmp_board, BOARD_HEIGHT * BOARD_WIDTH );
+	if(lns != 0) {
+		memcpy(board, tmp_board, BOARD_HEIGHT * BOARD_WIDTH);
 		*lines += lns;
-    		switch( lns ){
-    			case 1:  *score += POINTS    ; break;
-    			case 2:  *score += POINTS * 2; break;
-    			case 3:  *score += POINTS * 5; break;
-    			case 4:  *score += POINTS * 8; break;
-    			default: *score += POINTS * 8; break;
+    		switch(lns) {
+    			case 1:	*score += POINTS;
+				break;
+    			case 2: *score += POINTS * 2; 
+				break;
+    			case 3: *score += POINTS * 5;
+				break;
+    			case 4: *score += POINTS * 8;
+				break;
+    			default:*score += POINTS * 8;
+				break;
     		}
   	}
 
 	return lns;
 }
 
+/* The game function that controls the flow of the game */
 int start_game(){
-    	char board[ BOARD_HEIGHT ][ BOARD_WIDTH ];
+    	char board[BOARD_HEIGHT][BOARD_WIDTH];
     	char mtx_brick[4][4];
   	int score = 0;
   	int level = 0;
@@ -66,26 +74,28 @@ int start_game(){
   	char x, y;
   	char brick;
   	char next_brick;
-  	int vel = 10;
+  	int vel = 20;
 	char pause, pagain;
-  	struct timespec req;
+  	struct timespec req;				/* From time.h */
   	req.tv_sec = 0;
   	req.tv_nsec = vel * PULSE;
 
-  	srand( time( 0 ) );
-  	memset( board, 0, BOARD_HEIGHT * BOARD_WIDTH );
+  	srand(time(0));
+  	memset(board, 0, BOARD_HEIGHT * BOARD_WIDTH);
   	next_brick = rand() % 7 + 1;
 
   	init_screen();
-
-  	WINDOW* wboard   = create_wboard();
+	
+  	WINDOW* wboard   = create_wboard();		/* Pointers to WINDOW from ncurses.h */
   	WINDOW* wpreview = create_wpreview();
   	WINDOW* wscore   = create_wscore();
 	WINDOW* winstr	 = create_winstr();
+	WINDOW* wgeninstr= create_wgeninstr();
   	show_title();
-  	show_score( wscore, score, level, lines );
-	show_instr( winstr );
-  	wait_start( wboard );
+  	show_score(wscore, score, level, lines);
+	show_instr(winstr);
+	show_geninstr(wgeninstr);
+  	wait_start(wboard);
 
   	bool play = true;
   	while( play ){
@@ -96,15 +106,15 @@ int start_game(){
     		show_score( wscore, score, level, lines );
     		show_board( wboard, board );
 
-    		x = ( ( BOARD_WIDTH / 3 ) % 2 == 0 ) ? BOARD_WIDTH / 3 : BOARD_WIDTH / 3 + 1;
+    		x = ((BOARD_WIDTH / 3 ) % 2 == 0 ) ? BOARD_WIDTH / 3 : BOARD_WIDTH / 3 + 1;
     		y = - 3;
     
     		get_brick( brick, mtx_brick );
 
     		bool move = true;
     		int delay = 0;
-  		while( move ) {
-      			switch( getch() ) {
+  		while(move) {
+      			switch(getch()) {
       				case KEY_UP:
     						move_brick( wboard, board, mtx_brick, brick, &y, &x, ROTATE_R );
 						break;
@@ -144,28 +154,32 @@ int start_game(){
       				default: break;
       			} // switch( getch() )
 
-      			if( ++delay == DELAY_DOWN ){
-        			move_brick( wboard, board, mtx_brick, brick, &y, &x, DOWN    );
+      			if(++delay == DELAY_DOWN) {
+        			move_brick(wboard, board, mtx_brick, brick, &y, &x, DOWN);
       			}
-      			if( delay == DELAY_BOTTOM ){
+      			if(delay == DELAY_BOTTOM) {
         			delay = 0;
-        			if( check_brick(mtx_brick, board, y + 1, x ) ){
+        			if(check_brick(mtx_brick, board, y + 1, x)){
           				move = false;
-          				if( y < 0 ) play = false;
-        				}
-      				}
+          				if(y < 0) {
+						play = false;
+					}
+        			}
+      			}
 
-      				nanosleep( &req, 0 );
+      			nanosleep( &req, 0 );
     		} // while( move )
 
-    		set_board( board, mtx_brick, brick, y, x );
-    		tmp_lines += check_lines( board, &score, &lines );
+    		set_board(board, mtx_brick, brick, y, x);
+    		tmp_lines += check_lines(board, &score, &lines);
 
-    		if( tmp_lines >= CH_LEV ){
+    		if(tmp_lines >= CH_LEV) {
       			req.tv_nsec = vel * PULSE;
       			score += 1;
       			level++;
-      			if( vel > 1 ) vel--;
+      			if(vel > 1) {
+				vel--;
+			}
       			tmp_lines = tmp_lines % CH_LEV;
     		}
 
