@@ -5,7 +5,9 @@
 #include "screen.h"
 
 int main( int argc, char* argv[] ){
-
-  start_game();
-  return 0;
+	char play = 1;
+	while(start_game()) {
+		if();
+	}
+	return 0;
 } 

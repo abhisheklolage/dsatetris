@@ -12,9 +12,11 @@ WINDOW* create_win( const unsigned int h, const unsigned int w,
 WINDOW* create_wboard();
 WINDOW* create_wpreview();
 WINDOW* create_wscore();
+WINDOW* create_winstr();
 
 void ck_mvaddch( int ck, int y, int x, const char ch );
 void show_title();
+void show_instr( WINDOW *win );
 void show_score( WINDOW* win, const int score, const int level, const int lines );
 void show_preview( WINDOW* win, const char brick );
 void clear_win( WINDOW* win );

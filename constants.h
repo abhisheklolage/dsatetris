@@ -9,20 +9,25 @@
 #define DELAY_BOTTOM       20           
 #define CH_LEV             20              
 
-#define WBOARD_HEIGHT      20              
+#define WBOARD_HEIGHT      30             
 #define WBOARD_WIDTH       32         
-#define WBOARD_X            3             
+#define WBOARD_X            3 + 32             
 #define WBOARD_Y            3             
 
 #define WPREV_HEIGHT        6             
 #define WPREV_WIDTH        12             
-#define WPREV_X            38             
+#define WPREV_X            38 + 32             
 #define WPREV_Y             3             
 
 #define WSCORE_HEIGHT      13             
 #define WSCORE_WIDTH       12            
-#define WSCORE_X           38             
+#define WSCORE_X           38 + 32             
 #define WSCORE_Y           10             
+
+#define WINSTR_HEIGHT      19             
+#define WINSTR_WIDTH       25            
+#define WINSTR_X           50 + 32             
+#define WINSTR_Y           3             
 
 #define POINTS               10              
 

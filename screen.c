@@ -67,7 +67,10 @@ WINDOW* create_wpreview() {
 
 WINDOW* create_wscore() {
 	return create_win(WSCORE_HEIGHT, WSCORE_WIDTH, WSCORE_Y, WSCORE_X);
+}
 
+WINDOW* create_winstr() {
+	return create_win(WINSTR_HEIGHT, WINSTR_WIDTH, WINSTR_Y, WINSTR_X);
 }
 
 void wait_start( WINDOW *win ){
@@ -80,6 +83,16 @@ void wait_start( WINDOW *win ){
 	nodelay( stdscr, TRUE );
 }
 
+void wait_end( WINDOW *win ){
+	wattron( win, COLOR_PAIR( YB ) );
+	mvwprintw( win, WBOARD_HEIGHT/2  - 1, 3, "Do you want to play again?" );
+	mvwprintw( win, WBOARD_HEIGHT/2 , 3, "Press y for yes OR n for no" );
+	wattroff( win, COLOR_PAIR( YB ) );
+	wrefresh( win );
+	nodelay( stdscr, FALSE );
+	//getch();
+	nodelay( stdscr, TRUE );
+}
 void color_char( int ck, int y, int x, const char ch ){
 	attron( COLOR_PAIR( ck ) );
 	mvaddch( y, x, ch );
@@ -149,6 +162,18 @@ void show_score( WINDOW *win, const int score, const int level, const int lines 
   wrefresh(win);
 }
 
+void show_instr( WINDOW *win ) {
+  mvwprintw(win, 1, 2, "p: Pause-Unpase. ");
+  mvwprintw(win, 5, 2, "SPACE: Drop brick. ");
+  mvwprintw(win, 9, 2, "s: Shadow On-Off. ");
+  mvwprintw(win, 13, 2, "q: Quit. ");
+  wattron(win, 5 );
+  /*mvwprintw(win, 3, 2, "%7i", level );
+  mvwprintw(win, 7, 2, "%7i", score );
+  mvwprintw(win, 11, 2, "%7i", lines );*/
+  wattroff(win, COLOR_PAIR(YB) );
+  wrefresh(win);
+}
 
 void show_board( WINDOW* win, char board[BOARD_HEIGHT][BOARD_WIDTH] ){
 	clear_win( win );
