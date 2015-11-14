@@ -6,8 +6,10 @@
 
 int main( int argc, char* argv[] ){
 	char play = 1;
-	while(start_game()) {
-		if();
+	while(play = start_game()) {
+		if(!play) {
+			break;
+		}
 	}
 	return 0;
 } 
