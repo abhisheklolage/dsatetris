@@ -1,6 +1,6 @@
 CXX      = gcc
 CXXFLAGS = -Wall
-EXE      = tetris
+EXE      = project
 OBJS     = tetris.o game.o screen.o
 
 $(EXE): $(OBJS)

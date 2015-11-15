@@ -97,7 +97,7 @@ WINDOW* create_wgeninstr() {
 
 void wait_start(WINDOW *win){
 	wattron(win, COLOR_PAIR(RB));
-	mvwprintw(win, WBOARD_HEIGHT/2  - 1, (WBOARD_WIDTH - 12)/2 , "PRESS START!");
+	mvwprintw(win, WBOARD_HEIGHT/2  - 1, (WBOARD_WIDTH - 12)/2 - 5 , "PRESS AY KEY TO START!");
 	wattroff(win, COLOR_PAIR(RB));
 	wrefresh(win);
 	nodelay(stdscr, FALSE);
